@@ -27,7 +27,6 @@ function App() {
           user: null,
         });
       }
-      console.log("check" + auth.currentUser.email);
     });
   }, []);
   return (
