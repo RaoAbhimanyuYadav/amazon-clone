@@ -6,7 +6,7 @@ import "../../node_modules/noty/lib/noty.css";
 import "../../node_modules/noty/lib/themes/mint.css";
 
 function Product({ id, title, image, price, rating }) {
-  const [dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
 
   const addToBasket = () => {
     new Noty({
