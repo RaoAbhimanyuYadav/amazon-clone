@@ -44,4 +44,4 @@ app.post("/payments/create", async (request, response) => {
 exports.api = functions.https.onRequest(app);
 
 //example endpoint
-//(http://localhost:5001/clone-bacad/us-central1/api
+//http://localhost:5001/amazo1/us-central1/api

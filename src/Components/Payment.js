@@ -9,6 +9,7 @@ import { useStateValue } from "./StateProvider";
 import { getBasketTotal } from "./reducer";
 import { useEffect } from "react";
 import axios from "./axios";
+import { db } from "../firebase";
 
 const Payment = () => {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -36,6 +37,7 @@ const Payment = () => {
     getClientSecret(); //to run async function in  useeffect
   }, [basket]);
   console.log("the secret is>>> ", clientSecret);
+  console.log(user);
 
   const handleChange = (event) => {
     setDisabled(event.empty);
@@ -53,9 +55,19 @@ const Payment = () => {
       })
       .then(({ paymentIntent }) => {
         //paymentIntent = payment confirmation
+        db.collection("users").doc(user?.uid).collection("orders").doc(paymentIntent.id).set({
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+
+        dispatch({
+          type: "EMPTY_BASKET",
+        });
 
         navigate("/orders", { replace: true });
       });
